@@ -10,6 +10,7 @@ using namespace std;
 // Checks if the two given words are neighbors
 bool areNeighbors(const string &start, const string &finish) {
 	int diffCount = 0;
+	if (start.size() != finish.size()) return false;
 	for(int i = 0; i < start.size(); i ++) {
 		if(start[i] != finish[i]) {
 			diffCount ++;
