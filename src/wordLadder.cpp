@@ -66,7 +66,7 @@ tuple<int, int, int > bfs(vector<vector<int > > &graph) {
         queue<int > q;
         vector<int > distance (graph.size(), 0);
         q.push(i);
-	distance[i] = 0;
+	distance[i] = 1;
         while(!q.empty()){
 		c++;
 		if (!(c % 10000000)) cout << c << " somethings done." << endl;
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]) {
 			s2 = v[get<2>(tpl)];
 		}
 	}
-	cout << "Max length: " << get<0>(tpl) << endl;
+	cout << "Max length: " << maxLength << endl;
 	cout << "Beginning:" << s1 << endl;
 	cout << "Ending: " << s2 << endl;
 	return 0;
