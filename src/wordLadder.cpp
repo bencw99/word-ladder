@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
 
 		// do the thing
 		readInputFile(v, argv[i]);
-		cout << "File inputted" << endl;
+		cout << "File: " << argv[i] << " inputted" << endl;
 		generateGraph(g, v);
 		cout << "Graph generated" << endl;
 
