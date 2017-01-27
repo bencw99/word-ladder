@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// Generate map of string->int and int->string passed in by reference
+// Generate map of string->int passed in by reference from inputFile
 void readInputFile(map<string, int> &si, string inputFile) {
 	ifstream fin(inputFile);
 	string s;
@@ -28,7 +28,7 @@ void generateGraph(map<int, vector<int>> &graph, string inputFile) {
 
 }
 
-// Gets longest shortest path from begin in graph
+// Gets longest shortest path in given graph
 tuple<int, int, int > bfs(vector<vector<int > > &graph) {
     int c = 0, first, second, maxx = -1;
     for(int i = 0; i < graph.size(); i++){
