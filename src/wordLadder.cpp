@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
 #include <fstream>
 #include <tuple>
 #include <queue>
@@ -19,35 +18,31 @@ bool areNeighbors(const string &start, const string &finish) {
 			return false;
 		}
 	}
-	if(diffCount == 1) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return (diffCount ==1);
 }
 
 // Generate map of string->int passed in by reference from inputFile
-void readInputFile(map<string, int> &si, vector<string> &v, string inputFile) {
+void readInputFile(vector<string> &v, string inputFile) {
 	ifstream fin(inputFile);
 	string s;
 	int length = -1;
 	int index = 0;
+	// Read in words from file
 	while (fin >> s) {
+		// Find set length of words in file (hopefully)
 		if (length < 0) length = s.length();
+		// Checks if words deviate from set length
 		else if (length != -1 && s.length() != length) cout << "Goddamn it." << endl;
-		si[s] = index;
+		// Add to needed data structures
 		v.push_back(s);
+		// Increment
 		index++;
 	}
 }
 	
 // Generates a word ladder graph from the given dictionary of words
-void generateGraph(vector<vector<int> > &graph, map<string, int> &dictionaryMap, const vector<string> &dictionary) {
+void generateGraph(vector<vector<int> > &graph, const vector<string> &dictionary) {
 	int dsize = dictionary.size();
-	for(int i = 0; i < dsize; i ++) {
-		dictionaryMap[dictionary[i]] = i;
-	}
 	graph.resize(dictionary.size(), vector<int>());
 	for(int i = 0; i < dictionary.size(); i ++) {
 		for(int j = i; j < dictionary.size(); j ++) {
@@ -95,14 +90,13 @@ int main(int argc, char* argv[]) {
 	tuple<int, int, int> tpl;
 	int maxLength = 0;
 	for (int i = 1; i < argc; i++) {
-		map<string, int> si;
 		vector<vector<int> > g;
 		vector<string> v;
 
 		// do the thing
-		readInputFile(si, v, argv[i]);
+		readInputFile(v, argv[i]);
 		cout << "File inputted" << endl;
-		generateGraph(g, si, v);
+		generateGraph(g, v);
 		cout << "Graph generated" << endl;
 
 		// get the result
