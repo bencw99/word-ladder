@@ -8,7 +8,7 @@
 using namespace std;
 
 // Generate map of string->int and int->string passed in by reference
-void readInputFile(map<string, int> &si, map<int, string>&is, string inputFile) {
+void readInputFile(map<string, int> &si, string inputFile) {
 	ifstream fin(inputFile);
 	string s;
 	int length = -1;
@@ -17,7 +17,7 @@ void readInputFile(map<string, int> &si, map<int, string>&is, string inputFile) 
 		if (s.length() < 0) length = s.length();
 		else if (s.length() != length) cout << "Goddamn it." << endl;
 		si[s] = index;
-		is[index] = s;
+		index++;
 	}
 }
 	
@@ -42,18 +42,17 @@ int main(int argc, char* argv[]) {
 	tuple<int, int, int> tpl;
 	for (int i = 2; i < argc; i++) {
 		map<string, int> si;
-		map<int, string> is;
 		map<int, vector<int>> g;
 		vector<string> v;
 
 		// do the thing
-		readInputFile(si, is, v, argv[i]);
+		readInputFile(si, v, argv[i]);
 		generateGraph(g, si);
 		// get the result
 		tpl = bfs(g);
 	}
 	cout << "Max length: " << get<0>(tpl) << endl;
-	cout << "Beginning :" << get<1>(tpl) << endl;
-	cout << "Ending: " << get<2>(tpl) << endl;
+	cout << "Beginning :" << v[get<1>(tpl)] << endl;
+	cout << "Ending: " << v[get<2>(tpl)] << endl;
 	return 0;
 }
