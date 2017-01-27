@@ -28,13 +28,13 @@ bool areNeighbors(const string &start, const string &finish) {
 }
 
 // Generate map of string->int passed in by reference from inputFile
-void readInputFile(map<string, int> &si, string inputFile) {
+void readInputFile(map<string, int> &si, vector<string> &v, string inputFile) {
 	ifstream fin(inputFile);
 	string s;
 	int length = -1;
 	int index = 0;
 	while (fin >> s) {
-		if (s.length() < 0) length = s.length();
+		if (length < 0) length = s.length();
 		else if (s.length() != length) cout << "Goddamn it." << endl;
 		si[s] = index;
 		index++;
@@ -42,7 +42,7 @@ void readInputFile(map<string, int> &si, string inputFile) {
 }
 	
 // Generates a word ladder graph from the given dictionary of words
-void generateGraph(vector<vector<int>> &graph, map<string, int> &dictionaryMap, const vector<string> &dictionary) {
+void generateGraph(vector<vector<int> > &graph, map<string, int> &dictionaryMap, const vector<string> &dictionary) {
 	for(int i = 0; i < dictionary.size(); i ++) {
 		dictionaryMap[dictionary[i]] = i;
 	}
@@ -87,22 +87,27 @@ int main(int argc, char* argv[]) {
 		cout << "More arguments." << endl;
 		return 1;
 	}
-	int maxLength = 0;
 	string s1, s2;
 	tuple<int, int, int> tpl;
+	int maxLength = 0;
 	for (int i = 2; i < argc; i++) {
 		map<string, int> si;
-		map<int, vector<int>> g;
+		vector<vector<int> > g;
 		vector<string> v;
 
 		// do the thing
 		readInputFile(si, v, argv[i]);
-		generateGraph(g, si);
+		generateGraph(g, si, v);
 		// get the result
 		tpl = bfs(g);
+		if (maxLength < get<0>(tpl)) {
+			s1 = v[get<1>(tpl)];
+			s2 = v[get<2>(tpl)];
+			maxLength = get<0>(tpl);
+		}
 	}
 	cout << "Max length: " << get<0>(tpl) << endl;
-	cout << "Beginning :" << v[get<1>(tpl)] << endl;
-	cout << "Ending: " << v[get<2>(tpl)] << endl;
+	cout << "Beginning:" << s1 << endl;
+	cout << "Ending: " << s2 << endl;
 	return 0;
 }
