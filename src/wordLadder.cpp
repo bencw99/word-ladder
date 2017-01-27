@@ -68,16 +68,18 @@ tuple<int, int, int > bfs(vector<vector<int > > &graph) {
         q.push(i);
 	distance[i] = 0;
         while(!q.empty()){
-            int current = q.front(); q.pop();
-	    if(distance[current] > maxx){
-		    maxx = distance[current]; first = i; second = current;
-	    }
-            for(int j = 0; j < graph[current].size(); j++){
-                if(distance[graph[current][j]] == 0){
-                    q.push(graph[current][j]);
-                    distance[graph[current][j]] = distance[current] + 1;
-                }
-            }
+		c++;
+		if (!(c % 10000000)) cout << c << " somethings done." << endl;
+		int current = q.front(); q.pop();
+		if(distance[current] > maxx){
+			maxx = distance[current]; first = i; second = current;
+		}
+		for(int j = 0; j < graph[current].size(); j++){
+			if(distance[graph[current][j]] == 0){
+				q.push(graph[current][j]);
+				distance[graph[current][j]] = distance[current] + 1;
+			}
+		}
         }
     }
     tuple<int, int, int > WeDidIt(maxx, first, second);
@@ -99,8 +101,9 @@ int main(int argc, char* argv[]) {
 
 		// do the thing
 		readInputFile(si, v, argv[i]);
-
+		cout << "File inputted" << endl;
 		generateGraph(g, si, v);
+		cout << "Graph generated" << endl;
 
 		// get the result
 		tpl = bfs(g);
